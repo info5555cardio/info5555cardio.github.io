@@ -18,14 +18,56 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-md navbar-light bg-light fixed-top">
+    <nav class="navbar navbar-expand-md navbar-light style="background-color: #e3f2fd;" fixed-top">
         <a class="navbar-brand" href="#">Hypertension Free</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
     </nav>
 
-    <div class="card" style="width: 18rem;">
+
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Welcome to Hypertension Free!</h5>
+            <p class="card-text">Use this tool for advice from JNC based on your blood pressure trends.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Enter patient name</h5>
+            <p class="card-text">Example patient names: Kris Mohr, Fletcher Howell.  Must exist in databse:
+            https://r3.smarthealthit.org/Patient</p>
+
+
+            <div class="center-div">
+                <p>
+                    Enter patient given name:
+                    <input type="text" id="givenName" value="Susan">
+                </p>
+                <p>
+                    Enter patient family name:
+                    <input type="text" id="familyName" value="Clark">
+                </p>
+            </div>
+            <div class="d-flex justify-content-center">
+                <input onclick='getInformation();' type = 'button' value = 'Get Information'/>
+            </div>
+            <div id = "info" class="center-div">
+            </div>
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+<!-- <div class="content">
+    <div class="card1" style="width: 54rem;">
       <div class="card-body">
         <h5 class="card-title">Welcome to Hypertension Free!</h5>
         <h6 class="card-subtitle mb-2 text-muted">Use this tool for advice from JNC based on your blood pressure trends.</h6>
@@ -35,6 +77,18 @@
         <a href="#" class="card-link">Another link</a>
       </div>
     </div>
+
+    <div class="card2" style="width: 54rem;">
+      <div class="card-body">
+        <h5 class="card-title">Welcome to Hypertension Free!</h5>
+        <h6 class="card-subtitle mb-2 text-muted">Use this tool for advice from JNC based on your blood pressure trends.</h6>
+        <p class="card-text">Example patient names: Kris Mohr, Fletcher Howell.  Must exist in databse:
+        https://r3.smarthealthit.org/Patient</p>
+        <a href="#" class="card-link">Card link</a>
+        <a href="#" class="card-link">Another link</a>
+      </div>
+
+</div> -->
 
 
     <!-- <div class="content">
