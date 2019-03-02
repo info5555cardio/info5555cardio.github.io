@@ -26,7 +26,45 @@
     </nav>
 
 
-    <div class="row">
+    <div class="card-deck">
+      <div class="card">
+        <img class="card-img-top" src="..." alt="Card image cap">
+        <div class="card-body">
+          <h5 class="card-title">Welcome to Hypertension Free!</h5>
+          <p class="card-text">Use this tool for advice from JNC based on your blood pressure trends.</p>
+        </div>
+      </div>
+      <div class="card">
+        <img class="card-img-top" src="..." alt="Card image cap">
+        <div class="card-body">
+          <h5 class="card-title">Enter patient name</h5>
+          <p class="card-text">Example patient names: Kris Mohr, Fletcher Howell.  Must exist in databse:
+          https://r3.smarthealthit.org/Patient</p>
+
+          <div class="center-div">
+              <p>
+                  Enter patient given name:
+                  <input type="text" id="givenName" value="Susan">
+              </p>
+              <p>
+                  Enter patient family name:
+                  <input type="text" id="familyName" value="Clark">
+              </p>
+          </div>
+          <div class="d-flex justify-content-center">
+              <input onclick='getInformation();' type = 'button' value = 'Get Information'/>
+          </div>
+          <div id = "info" class="center-div">
+          </div>
+
+
+        </div>
+      </div>
+    </div>
+
+
+
+    <!-- <div class="row">
       <div class="col-sm-6">
         <div class="card">
           <div class="card-body">
@@ -63,7 +101,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
 
 
 <!-- <div class="content">
