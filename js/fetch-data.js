@@ -6,7 +6,7 @@ function fetchComorbidities(){
   $("#table-data").empty();
   var selected_conditions = [];
 
-  if(document.getElementById("Hypertensive disease").checked){
+  if(document.getElementById("Hypertensive heart disease").checked){
     selected_conditions.push("64715009");
   }
   if(document.getElementById("diarrhea").checked){
