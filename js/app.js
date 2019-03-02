@@ -81,7 +81,7 @@ function getInformation() {
         });
 
         var vitals = {
-            type : "Observation-blood-pressure",
+            type : "Systolic blood pressure",
             query: {
                 subject : { $or: patient_id }
             }
