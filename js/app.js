@@ -81,10 +81,7 @@ function getInformation() {
         });
 
         var vitals = {
-            type : "Systolic blood pressure",
-            query: {
-                subject : { $or: patient_id }
-            }
+            type: "Observation", query: {code:  {$or: ["55284-4" ]}}
         }
     
         smart.api.search(vitals).then(function(r) {
