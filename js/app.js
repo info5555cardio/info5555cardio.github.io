@@ -1,65 +1,137 @@
 // Create a FHIR client (server URL, patient id in `demo`)
+
+// EXAMPLES: SUSAN CLARK, Jen Quitzon, 
+
 var smart = FHIR.client(config);
 
 
-function fetchComorbidities(){
-  $("#table-data").empty();
-  var selected_conditions = [];
-
-  if(document.getElementById("abdominal-pain").checked){
-    selected_conditions.push("21522001");
-  }
-  if(document.getElementById("diarrhea").checked){
-    selected_conditions.push("62315008");
-  }
-  if(document.getElementById("constipation").checked){
-    selected_conditions.push("14760008");
-  }
-
-  console.log(selected_conditions);
-
-  smart.api.search({
-    type: "Condition",
-    query: {code : {$or : selected_conditions}}
-  }).then(function(r){
-    var patients = [];
-    for (var i in r.data.entry){
-      patients.push(r.data.entry[i].resource.subject.reference.split("/")[1]);
-      // console.log(r.data.entry[i].resource.subject.reference.split("/")[1]);
-    }
-    console.log(patients);
-     // console.log(JSON.stringify(r.data.entry, null, 2));
-
-     smart.api.search({
-       type: "Condition",
-       query: {'subject' : {$or : patients}}
-     }).then(function(r){
-       var conditions = {};
-       for (var i in r.data.entry){
-         var condition_code = r.data.entry[i].resource.code.coding[0].code;
-         var condition_name = r.data.entry[i].resource.code.coding[0].display;
-         console.log(condition_code);
-         if (condition_code in conditions){
-           conditions[condition_code]["count"] += 1;
-         } else {
-           conditions[condition_code] = {
-             "count" : 1,
-             "name" : condition_name
-           };
-         }
-       }
-       console.log(JSON.stringify(conditions, null, 2));
-       for(var key in conditions){
-         $("#table-data").append(
-           '<tr>'+
-               '<td>'+conditions[key]["name"]+'</td>'+
-               '<td>'+key+'</td>'+
-               '<td>'+conditions[key]["count"]+'</td>'+
-           '</tr>'
-         )
-       }
-     });
-  });
+function getTextToSpeak() {
+    return document.getElementById("givenName").value + "      " + document.getElementById("familyName").value;
 }
 
-// var conditions = fetchComorbidities(["14760008", "62315008", "21522001"])
+
+function getInformation() {
+
+    var givenName = document.getElementById("givenName").value;
+    var familyName = document.getElementById("familyName").value;
+
+    var name = {
+        type: "Patient",
+        query: {
+            given: givenName,
+            family: familyName
+        }
+    }
+
+    smart.api.search(name).then(function(r) {
+        if (typeof(r.data.entry) != "undefined") { 
+            //This is your HTML Output
+            $("#info").empty();
+            $("#info").append(
+                '<h3> Patient Info</h3>'+
+                '<p>'+'<b>'+'Gender: '+'</b>'+r.data.entry[0].resource.gender+'</p>'+
+                '<p>'+'<b>'+'Birthday: '+'</b>'+r.data.entry[0].resource.birthDate+'</p>'+
+                '<p>'+'<b>'+'ID: '+'</b>'+r.data.entry[0].resource.id+'</p>'
+            )
+            patient_id = r.data.entry[0].resource.id;
+            console.log("patient_id is " + patient_id)
+        } else{
+            $("#info").empty();
+            $("#info").append(
+                '<p>sorry bro not here</p>'
+            )
+            // x = undefined;
+        }
+
+        var condition = {
+            type: "Condition",
+            query: { subject: { $or: patient_id } // need this to be the getPatientID() output
+            }
+        }
+    
+        smart.api.search(condition).then(function(r) {
+    
+            if (typeof(r.data.entry) != "undefined") { 
+                //This is your HTML Output
+                console.log(r.data.entry)
+                // console.log(r.data.entry[0].resource)
+                // $("#info").empty();
+
+                $("#info").append(
+                    // '<p>'+'ID: '+r.data.entry[0].resource.subject.reference.split("/")[1]+'</p>'+
+                    '<p>'+ '<b>'+'Condition(s): ' + '</b>'
+                )
+
+                for (var i = 0; i < r.data.entry.length; i++) { 
+                    console.log(r.data.entry[i].resource.code.text+'; ');
+                    $("#info").append(
+                        // '<p>'+'ID: '+r.data.entry[0].resource.subject.reference.split("/")[1]+'</p>'+
+                        r.data.entry[i].resource.code.text+'; '
+                    )
+                  }
+                  $("#info").append(
+                      '</p>'
+                )
+            } else{
+                $("#info").empty();
+                $("#info").append(
+                    '<p>No Conditions Listed</p>'
+                )
+            }
+        });
+
+        var vitals = {
+            type : "Observation",
+            query: {
+                subject : { $or: patient_id }
+            }
+        }
+    
+        smart.api.search(vitals).then(function(r) {
+            if (typeof(r.data.entry) != "undefined") { 
+                //This is your HTML Output
+                console.log(r.data.entry)
+                // console.log(r.data.entry[0].resource)
+                // $("#info").empty();
+
+                $("#info").append(
+                    '<p>'+'<b>'+'Vital(s): '+ '</b>'
+                )
+
+                var seen = []
+
+                for (var i = r.data.entry.length-1; i >= r.data.entry.length-5; i--) {
+                    console.log(r.data.entry[i].resource.code.text
+                        +': '+r.data.entry[i].resource.valueQuantity.value
+                        +' '+r.data.entry[i].resource.valueQuantity.unit)
+
+                    console.log(typeof (r.data.entry[i].resource.valueQuantity) === 'undefined');
+
+
+                    if (typeof (r.data.entry[i].resource.valueQuantity) !== 'undefined') {
+                        if(seen.includes(r.data.entry[i].resource.valueQuantity.unit) === false) {
+                        seen.push(r.data.entry[i].resource.code.text
+                            +': '+r.data.entry[i].resource.valueQuantity.value
+                            +' '+r.data.entry[i].resource.valueQuantity.unit)
+                        }
+                    }
+                }
+
+                // console.log(seen);
+
+                for (var x = 0; x < seen.length; x++) {
+                    console.log(seen[x]);
+                    $("#info").append(
+                        '<p>'+seen[x]+'<p>'
+                    )
+                }
+            } else{
+                $("#info").empty();
+                $("#info").append(
+                    '<p>sorry no vitals</p>'
+                )
+            }
+        });
+
+    });
+}
