@@ -18,7 +18,7 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-md navbar-light" style="background-color: #e3f2fd;" fixed-top">
+    <nav class="navbar navbar-expand-md navbar-light fixed-top">
         <a class="navbar-brand" href="#">Hypertension Free</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -33,7 +33,7 @@
                         Use this tool for advice from JNC based on your blood pressure trends.
                     </h4>
                     <p>
-                        Example Names to Pass: Susan Clark, Jen Quitzon - must be in database
+                        Example patient names: Must exist in databse:
                         https://r3.smarthealthit.org/Patient
                     </p>
                 </div>
@@ -52,7 +52,6 @@
         </p>
     </div>
     <div class="d-flex justify-content-center">
-        <input onclick='responsiveVoice.speak(getTextToSpeak());' type='button' value='🔊 Say name!' />
         <input onclick='getInformation();' type = 'button' value = 'Get Information'/>
     </div>
     <div id = "info" class="center-div">
