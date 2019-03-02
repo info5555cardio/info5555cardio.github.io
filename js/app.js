@@ -81,7 +81,7 @@ function getInformation() {
         });
 
         var vitals = {
-            type : "Observation",
+            type : "Observation-blood-pressure",
             query: {
                 subject : { $or: patient_id }
             }
