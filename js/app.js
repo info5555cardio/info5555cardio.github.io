@@ -43,57 +43,7 @@ function getInformation() {
             // x = undefined;
         }
 
-        var condition = {
-            type: "Condition",
-            query: { subject: { $or: patient_id } // need this to be the getPatientID() output
-            }
-        }
-    
-        smart.api.search(condition).then(function(r) {
-    
-            if (typeof(r.data.entry) != "undefined") { 
-                //This is your HTML Output
-                //console.log('bloodPrsure',r.data.entry[0].resource)
-                // console.log(r.data.entry[0].resource)
-                // $("#info").empty();
-
-                $("#info").append(
-                    // '<p>'+'ID: '+r.data.entry[0].resource.subject.reference.split("/")[1]+'</p>'+
-                    '<p>'+ '<b>'+'Hypertension Diagnosis(s): ' + '</b>'
-                )
-
-                var hypertension = 'No Hypertension'
-
-
-                for (var i = 0; i < r.data.entry.length; i++) { 
-
-                    console.log(r.data.entry[i].resource.code.text+'; ');
-
-                    if (r.data.entry[i].resource.code.text.includes(('Hypertension'))!=false)
-                    {
-                        hypertension = 'Hypertensive heart disease positive'
-                        
-                    
-
-                    }
-
-                    
-                  }
-                  $("#info").append(
-                        // '<p>'+'ID: '+r.data.entry[0].resource.subject.reference.split("/")[1]+'</p>'+
-                        //r.data.entry[i].resource.code.text+'; '
-                        hypertension)
-                  $("#info").append(
-                      '</p>'
-                )
-            } else{
-                $("#info").empty();
-                $("#info").append(
-                    '<p>No Conditions Listed</p>'
-                )
-            }
-        });
-
+        
         var vitals = {
             type : "Observation",
             query: {
@@ -156,6 +106,77 @@ function getInformation() {
                 )
             }
         });
+
+        var condition = {
+            type: "Condition",
+            query: { subject: { $or: patient_id } // need this to be the getPatientID() output
+            }
+        }
+    
+        smart.api.search(condition).then(function(r) {
+    
+            if (typeof(r.data.entry) != "undefined") { 
+                //This is your HTML Output
+                //console.log('bloodPrsure',r.data.entry[0].resource)
+                // console.log(r.data.entry[0].resource)
+                // $("#info").empty();
+
+                $("#info").append(
+                    // '<p>'+'ID: '+r.data.entry[0].resource.subject.reference.split("/")[1]+'</p>'+
+                    '<p>'+ '<b>'+'Hypertension Diagnosis(s): ' + '</b>'
+                )
+
+                var hypertension = 'No Hypertension'
+
+
+                for (var i = 0; i < r.data.entry.length; i++) { 
+
+                    console.log(r.data.entry[i].resource.code.text+'; ');
+
+                    if (r.data.entry[i].resource.code.text.includes(('Hypertension'))!=false)
+                    {
+                        hypertension = 'Hypertensive heart disease positive'
+                        
+                    
+
+                    }
+
+                    
+                  }
+
+
+                  $("#info").append(
+                        // '<p>'+'ID: '+r.data.entry[0].resource.subject.reference.split("/")[1]+'</p>'+
+                        //r.data.entry[i].resource.code.text+'; '
+                        hypertension)
+                  $("#info").append(
+                    // '<p>'+'ID: '+r.data.entry[0].resource.subject.reference.split("/")[1]+'</p>'+
+                    '<p>'+ '<b>'+'Tips: ' + '</b>'
+                )
+                   if(hypertension == 'No Hypertension'){
+                    $("#info").append(
+                        // '<p>'+'ID: '+r.data.entry[0].resource.subject.reference.split("/")[1]+'</p>'+
+                        //r.data.entry[i].resource.code.text+'; '
+                        "Congratulations, you don't have Hypertension, keep this trend")
+                    
+                  }
+                  else{
+                     $("#info").append(
+                    "Tips: 1. Eat healthy, 2.Workout More, 3. sleep well"
+                    )
+                  }
+
+                  $("#info").append(
+                      '</p>'
+                )
+            } else{
+                $("#info").empty();
+                $("#info").append(
+                    '<p>No Conditions Listed</p>'
+                )
+            }
+        });
+
 
     });
 }
