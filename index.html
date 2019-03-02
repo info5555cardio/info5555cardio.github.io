@@ -43,13 +43,23 @@
             <div id="question" >
                 <h3>What Conditions Apply to your Patient?</h3>
                 <div class="form-check">
-                  <input class="form-check-input" type="checkbox" value="" id="diarrhea">
-                  <label class="form-check-label" for="diarrhea">
-                    <span class="badge badge-secondary">diarrhea</span>
+                  <input class="form-check-input" type="checkbox" value="" id="abdominal-pain">
+                  <label class="form-check-label" for="abdominal-pain">
+                    <span class="badge badge-secondary">Abdominal Pain</span>
                   </label>
                 </div>
-                
-                
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" value="" id="diarrhea">
+                  <label class="form-check-label" for="diarrhea">
+                    <span class="badge badge-secondary">Diarrhea</span>
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" value="" id="constipation">
+                  <label class="form-check-label" for="constipation">
+                    <span class="badge badge-secondary">Constipation</span>
+                  </label>
+                </div>
                 <br/>
                 <button class="btn btn-primary" onclick="fetchComorbidities()">Search</button>
               </div>
@@ -85,5 +95,4 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>  </body>
 <script src="js/fhir-client.js"></script>
-<script src="js/fetch-data.js"></script>
-</html>
+<script src="js/fetach-data.js"></script>
