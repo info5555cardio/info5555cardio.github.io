@@ -53,22 +53,36 @@ function getInformation() {
     
             if (typeof(r.data.entry) != "undefined") { 
                 //This is your HTML Output
-                console.log(r.data.entry)
+                //console.log('bloodPrsure',r.data.entry[0].resource)
                 // console.log(r.data.entry[0].resource)
                 // $("#info").empty();
 
                 $("#info").append(
                     // '<p>'+'ID: '+r.data.entry[0].resource.subject.reference.split("/")[1]+'</p>'+
-                    '<p>'+ '<b>'+'Condition(s): ' + '</b>'
+                    '<p>'+ '<b>'+'Hypertension Diagnosis(s): ' + '</b>'
                 )
 
+                var hypertension = 'No Hypertension'
+
+
                 for (var i = 0; i < r.data.entry.length; i++) { 
+
                     console.log(r.data.entry[i].resource.code.text+'; ');
-                    $("#info").append(
-                        // '<p>'+'ID: '+r.data.entry[0].resource.subject.reference.split("/")[1]+'</p>'+
-                        r.data.entry[i].resource.code.text+'; '
-                    )
+
+                    if (r.data.entry[i].resource.code.text.includes(('Hypertension'))!=false)
+                    {
+                        hypertension = 'Hypertensive heart disease positive'
+                        
+                    
+
+                    }
+
+                    
                   }
+                  $("#info").append(
+                        // '<p>'+'ID: '+r.data.entry[0].resource.subject.reference.split("/")[1]+'</p>'+
+                        //r.data.entry[i].resource.code.text+'; '
+                        hypertension)
                   $("#info").append(
                       '</p>'
                 )
@@ -90,12 +104,12 @@ function getInformation() {
         smart.api.search(vitals).then(function(r) {
             if (typeof(r.data.entry) != "undefined") { 
                 //This is your HTML Output
-                console.log(r.data.entry)
+                console.log('bp',r.data.entry[0].resource)
                 // console.log(r.data.entry[0].resource)
                 // $("#info").empty();
 
                 $("#info").append(
-                    '<p>'+'<b>'+'Vital(s): '+ '</b>'
+                    '<p>'+'<b>'+'Cholesterol Level(s): '+ '</b>'
                 )
 
                 var seen = []
@@ -118,13 +132,23 @@ function getInformation() {
                 }
 
                 // console.log(seen);
+                // var cl = false
 
                 for (var x = 0; x < seen.length; x++) {
-                    console.log(seen[x]);
-                    $("#info").append(
+                    console.log('bp',seen[x]);
+                    if (seen[x].includes("Cholesterol")){
+                        // cl = true
+                        $("#info").append(
                         '<p>'+seen[x]+'<p>'
                     )
+                    }
+                    
                 }
+                // if(cl == false)
+                // {
+                //     console.log("okayokay")
+                
+                // }
             } else{
                 $("#info").empty();
                 $("#info").append(
