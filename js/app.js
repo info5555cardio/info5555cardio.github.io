@@ -81,8 +81,10 @@ function getInformation() {
         });
 
         var vitals = {
-            type: "Observation", 
-            query: {subject: { $or:blood-pressure}
+            type : "Observation",
+            query: {
+                subject : { $or: patient_id }
+            }
         }
     
         smart.api.search(vitals).then(function(r) {
